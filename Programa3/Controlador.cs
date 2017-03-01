@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Programa3
 {
-    class Program
+    class Controlador
     {
-        static void Main(string[] args)
-        {
-
-        }
     }
 }
