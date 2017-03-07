@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace Programa3
 {
+    //&p-Archivo
     class Archivo
     {
-        private float parejas = 0;
-        private float xk;
-        private float rxy;
-        private float r2;
-        private float b0;
-        private float b1;
-        private float yk;
+        private double parejas = 0;
+        private double xk;
+        private double rxy;
+        private double r2;
+        private double b0;
+        private double b1;
+        private double yk;
         
+        //&i
         public Archivo()
         {
             parejas = 0;
@@ -27,57 +29,60 @@ namespace Programa3
             yk = 0;
         }
 
-        public float Parejas
+        //&i
+        public double Parejas
         {
             set { parejas = value; }
             get { return parejas; }
         }
 
-        public float Xk
+        //&i
+        public double Xk
         {
             set { xk = value; }
             get { return xk; }
         }
 
-        public float Rxy
+        //&i
+        public double Rxy
         {
             set { rxy = value; }
             get { return rxy; }
         }
 
-        public float R2
+        //&i
+        public double R2
         {
             set { r2 = value; }
             get { return r2; }
         }
 
-        public float B0
+        //&i
+        public double B0
         {
             set { b0 = value; }
             get { return b0; }
         }
 
-        public float B1
+        //&i
+        public double B1
         {
             set { b1 = value; }
             get { return b1; }
         }
 
-        public float Yk
+        //&i
+        public double Yk
         {
             set { yk = value; }
             get { return yk; }
         }
 
+        //&i
         public void toString()
         {
-            Console.WriteLine("N = " + parejas + "\nxk = " + xk + "\nr = " + rxy + "\nr2 = " + "\nb0 = " + b0 + "\nb1 = " + b1 + "\nyk = " + yk);
+            Console.WriteLine("N = " + parejas + "\nxk = " + xk + "\nr = " + Math.Round(rxy,5) + "\nr2 = " + 
+                Math.Round(r2,5) + "\nb0 = " + Math.Round(b0,5) + "\nb1 = " + Math.Round(b1,5) + "\nyk = " + Math.Round(yk,5));
         }
-
-
-
-
-
-
     }
 }

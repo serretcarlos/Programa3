@@ -7,8 +7,10 @@ using System.IO;
 
 namespace Programa3
 {
+    //&p-Programa
     class Program
     {
+        //&i
         static void Main(string[] args)
         {
             string archivo;
@@ -16,7 +18,6 @@ namespace Programa3
             Controlador controlador = new Controlador();
             controlador.ProcesarArchivo(archivo);
             Console.ReadLine();
-
         }
     }
 }

@@ -7,15 +7,17 @@ using System.IO;
 
 namespace Programa3
 {
+    //&p-Parejas
     class Controlador
     {
         private Archivo archivo;
-        private float sumXiYi;
-        private float sumXi;
-        private float sumYi;
-        private float sumXi2;
-        private float sumYi2;
+        private double sumXiYi;
+        private double sumXi;
+        private double sumYi;
+        private double sumXi2;
+        private double sumYi2;
 
+        //&i
         public Controlador()
         {
             sumXiYi = 0;
@@ -25,10 +27,15 @@ namespace Programa3
             sumYi2 = 0;
         }
 
+
+        /// <summary>
+        /// Procesa el archivo y lee línea por línea de este, calculando totales correspondientes
+        /// </summary>
+        /// <param name="nombreArchivo"></param>
+        //&i
         public void ProcesarArchivo(string nombreArchivo)
         {
             archivo = new Archivo();
-            string[] pareja;
             StreamReader entrada = null;
             bool bAbierto = false;
             try
@@ -46,61 +53,91 @@ namespace Programa3
                 try
                 {
                     string sLinea = entrada.ReadLine();
-                    archivo.Xk = float.Parse(sLinea);
+                    archivo.Xk = double.Parse(sLinea);
                     sLinea = entrada.ReadLine();
                     while (sLinea != null)
                     {
-                        string[] arrParejas = sLinea.Split(',');
-                        sumXi += float.Parse(arrParejas[0]);
-                        sumYi += float.Parse(arrParejas[1]);
-                        sumXiYi += (float.Parse(arrParejas[0]) * float.Parse(arrParejas[1]));
-                        sumXi2 += (float)Math.Pow(float.Parse(arrParejas[0]), 2);
-                        sumYi2 += (float)Math.Pow(float.Parse(arrParejas[1]), 2);
+                        string[] arrPareja = sLinea.Split(',');
+                        sumXi += double.Parse(arrPareja[0]);
+                        sumYi += double.Parse(arrPareja[1]);
+                        sumXiYi += (double.Parse(arrPareja[0]) * double.Parse(arrPareja[1]));
+                        sumXi2 += (double)Math.Pow(double.Parse(arrPareja[0]), 2);
+                        sumYi2 += (double)Math.Pow(double.Parse(arrPareja[1]), 2);
                         archivo.Parejas++;
-                        CalcularRxy();
-                        CalcularR2();
-                        CalcularB1();
-                        CalcularB0();
-                        CalcularYk();
                         sLinea = entrada.ReadLine();
                     }
+                    archivo.Rxy = CalcularRxy();
+                    archivo.R2 = CalcularR2();
+                    archivo.B1 = CalcularB1();
+                    archivo.B0 = CalcularB0();
+                    archivo.Yk = CalcularYk();
+                    archivo.toString();
                 } 
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
             }
-            archivo.toString();
-
         }
 
 
-
-        private float CalcularR2()
+        /// <summary>
+        /// Se calcula el valor de r2
+        /// </summary>
+        /// <returns>valor tipo doble r2</returns>
+        //&i
+        private double CalcularR2()
         {
-            return archivo.Rxy * archivo.Rxy;
+            double r2 = archivo.Rxy * archivo.Rxy;
+            return r2;
         }
 
-        private float CalcularRxy()
+        /// <summary>
+        /// Se calcula el valor de rxy
+        /// </summary>
+        /// <returns>valor tipo doble rxy</returns>
+        //&i
+        private double CalcularRxy()
         {
-            float rxy = (archivo.Parejas * sumXiYi) - (sumXi * sumYi) / ((float)Math.Sqrt((archivo.Parejas * sumXi2 - (sumXi * sumXi))) * (archivo.Parejas * sumYi2 - (sumYi * sumYi)));
+            double mediaXi = sumXi / archivo.Parejas;
+            double mediaYi = sumYi / archivo.Parejas;
+            double covarianza = sumXiYi / archivo.Parejas - mediaXi * mediaYi;
+            double desviacion1 = Math.Sqrt(sumXi2 / archivo.Parejas - (mediaXi * mediaXi));
+            double desviacion2 = Math.Sqrt(sumYi2 / archivo.Parejas - (mediaYi * mediaYi));
+            double rxy = covarianza / (desviacion1 * desviacion2);
             return rxy;
         }
 
-        private float CalcularB0()
+        /// <summary>
+        /// Se calcula el valor de b0
+        /// </summary>
+        /// <returns>valor tipo doble b0</returns>
+        //&i
+        private double CalcularB0()
         {
             return sumYi / archivo.Parejas - archivo.B1 * (sumXi / archivo.Parejas);
         }
 
-        private float CalcularB1()
+        /// <summary>
+        /// Se calcula el valor de b1
+        /// </summary>
+        /// <returns>valor tipo doble b1</returns>
+        //&i
+        private double CalcularB1()
         {
             return (sumXiYi - (archivo.Parejas * (sumXi / archivo.Parejas) * (sumYi / archivo.Parejas))) /
-                (sumXi2 - (archivo.Parejas * (sumXi/archivo.Parejas) * (sumYi/archivo.Parejas)));
+                (sumXi2 - (archivo.Parejas * ((sumXi/archivo.Parejas) * (sumXi/archivo.Parejas))));
         }
 
-        private float CalcularYk()
+        /// <summary>
+        /// Se calcula el valor de yk
+        /// </summary>
+        /// <returns>valor tipo doble yk</returns>
+        //&i
+        private double CalcularYk()
         {
-            return archivo.B0 + archivo.B1 * archivo.Xk;
+            double yk = archivo.B0 + archivo.B1 * archivo.Xk;
+            return yk;
         }
 
     }
